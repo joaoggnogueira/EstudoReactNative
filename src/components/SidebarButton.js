@@ -11,7 +11,9 @@ export default class Sidebar extends Component {
       <TouchableHighlight
         activeOpacity={1}
         underlayColor={colors.secondary}
-        onPress={() => {}}>
+        onPress={() => {
+          this.props.onPress();
+        }}>
         <View style={styles.button}>
           {this.props.icon ? (
             <FontAwesomeIcon icon={this.props.icon} color={'white'} size={24} />

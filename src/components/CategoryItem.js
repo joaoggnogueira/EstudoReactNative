@@ -1,29 +1,36 @@
 import React from 'react';
-import {Text, StyleSheet, View, Image} from 'react-native';
+import {Text, StyleSheet, View, Image, TouchableHighlight} from 'react-native';
 import {colors} from '../colors.js';
 
 export default props => (
-  <View style={[styles.elevation, styles.view]}>
-    {props.item.ammount ? (
-      <View style={styles.amount_badge}>
-        <Text style={styles.amount_badge_text}>{props.item.ammount}</Text>
-      </View>
-    ) : null}
-    <Image style={styles.imagewrap} source={{uri: props.item.image_uri}} />
-    <View style={styles.content}>
-      <View style={styles.nametag}>
-        <Text style={styles.nametag_text}>{props.item.name}</Text>
-      </View>
-      <View style={styles.flexGrow} />
-      <View style={styles.pricetag}>
-        <Text style={styles.pricetag_text}>
-          {(props.item.category_id ? 'a partir de ' : '') +
-            props.item.getPriceStringFormat() +
-            ' R$'}
-        </Text>
+  <TouchableHighlight
+    activeOpacity={1}
+    underlayColor="transparent"
+    onPress={() => {
+      props.onPress(props.item);
+    }}>
+    <View style={[styles.elevation, styles.view]}>
+      {props.item.ammount ? (
+        <View style={styles.amount_badge}>
+          <Text style={styles.amount_badge_text}>{props.item.ammount}</Text>
+        </View>
+      ) : null}
+      <Image style={styles.imagewrap} source={{uri: props.item.image_uri}} />
+      <View style={styles.content}>
+        <View style={styles.nametag}>
+          <Text style={styles.nametag_text}>{props.item.name}</Text>
+        </View>
+        <View style={styles.flexGrow} />
+        <View style={styles.pricetag}>
+          <Text style={styles.pricetag_text}>
+            {(props.item.category_id ? 'a partir de ' : '') +
+              props.item.getPriceStringFormat() +
+              ' R$'}
+          </Text>
+        </View>
       </View>
     </View>
-  </View>
+  </TouchableHighlight>
 );
 
 const styles = StyleSheet.create({

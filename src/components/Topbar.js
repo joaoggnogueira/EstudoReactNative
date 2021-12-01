@@ -11,7 +11,10 @@ export default class Topbar extends Component {
     return (
       <>
         <View style={[styles.topbar, styles.elevation]}>
-          <TouchableHighlight onPress={() => this.props.openDrawer()}>
+          <TouchableHighlight
+            onPress={() => {
+              this.props.navigation.openDrawer();
+            }}>
             <View style={styles.navbutton}>
               <Text style={styles.navbutton_text}>
                 <FontAwesomeIcon icon={faBars} color={'white'} size={24} />
@@ -20,9 +23,12 @@ export default class Topbar extends Component {
           </TouchableHighlight>
           <View style={styles.flexGrow} />
           <FontAwesomeIcon icon={faCoffee} color={'white'} size={24} />
-          <Text style={styles.header_text}>Jopahannas</Text>
+          <Text style={styles.header_text}>{this.props.title}</Text>
           <View style={styles.flexGrow} />
-          <TouchableHighlight onPress={() => this.props.openSearch()}>
+          <TouchableHighlight
+            onPress={() => {
+              this.props.navigation.navigate('Search');
+            }}>
             <View style={styles.navbutton}>
               <Text style={styles.navbutton_text}>
                 <FontAwesomeIcon icon={faSearch} color={'white'} size={24} />

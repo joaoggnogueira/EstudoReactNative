@@ -12,7 +12,7 @@ import {colors} from '../colors.js';
 
 import products from '../provider/Products';
 
-import Product from '../components/Product';
+import ProductItem from '../components/ProductItem';
 
 export default class Searchbar extends Component {
   state = {
@@ -58,7 +58,7 @@ export default class Searchbar extends Component {
           <TouchableHighlight
             activeOpacity={0.6}
             underlayColor="#DDDDDD"
-            onPress={() => this.props.closeSearchbar()}>
+            onPress={() => this.props.navigation.goBack()}>
             <View style={styles.iconPadding}>
               <FontAwesomeIcon
                 icon={faTimes}
@@ -73,7 +73,14 @@ export default class Searchbar extends Component {
           style={styles.scrollView}
           data={this.state.results}
           keyExtractor={i => `${i.id}`}
-          renderItem={Product}
+          renderItem={({item}) => (
+            <ProductItem
+              item={item}
+              onPress={i =>
+                this.props.navigation.navigate('Product', {item: i})
+              }
+            />
+          )}
         />
       </>
     );

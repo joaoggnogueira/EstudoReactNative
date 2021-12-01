@@ -11,6 +11,7 @@ import {
   faBookmark,
   faShieldAlt,
   faSignOutAlt,
+  faHome,
 } from '@fortawesome/free-solid-svg-icons';
 
 import SidebarButton from './SidebarButton';
@@ -23,10 +24,31 @@ export default class Sidebar extends Component {
           <FontAwesomeIcon icon={faCoffee} color={'white'} size={24} />
           <Text style={styles.header_text}>Jopahannas</Text>
         </View>
-        <SidebarButton text="Conta" icon={faUserCircle} />
-        <SidebarButton text="Carrinho" icon={faShoppingCart} />
-        <SidebarButton text="Meus Pedidos" icon={faBookmark} />
-        <SidebarButton text="Segurança" icon={faShieldAlt} />
+        <SidebarButton
+          text="Home"
+          icon={faHome}
+          onPress={() => this.props.navigation.navigate('Home')}
+        />
+        <SidebarButton
+          text="Conta"
+          icon={faUserCircle}
+          onPress={() => this.props.navigation.navigate('Account')}
+        />
+        <SidebarButton
+          text="Carrinho"
+          icon={faShoppingCart}
+          onPress={() => this.props.navigation.navigate('Cart')}
+        />
+        <SidebarButton
+          text="Meus Pedidos"
+          icon={faBookmark}
+          onPress={() => this.props.navigation.navigate('Orders')}
+        />
+        <SidebarButton
+          text="Segurança"
+          icon={faShieldAlt}
+          onPress={() => this.props.navigation.navigate('Security')}
+        />
         <View style={styles.flexGrow} />
         <SidebarButton text="Encerrar Sessão" icon={faSignOutAlt} small />
         <Text style={styles.textColor}>versão {Platform.OS} 1.0.0</Text>

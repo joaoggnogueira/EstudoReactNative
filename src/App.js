@@ -1,67 +1,59 @@
-import React, {useRef, useState} from 'react';
-import Category from './components/Category';
-import Topbar from './components/Topbar';
+import React from 'react';
 import Sidebar from './components/Sidebar';
-import Searchbar from './components/Searchbar';
+import Topbar from './components/Topbar';
 
-import categories from './provider/Categories';
+import Search from './views/Search';
+import Home from './views/Home';
+import Cart from './views/Cart';
+import Orders from './views/Orders';
+import Security from './views/Security';
+import Account from './views/Account';
+import Category from './views/Category';
+import Product from './views/Product';
 
-import {View, DrawerLayoutAndroid, FlatList, StyleSheet} from 'react-native';
+import {NavigationContainer} from '@react-navigation/native';
+import {createDrawerNavigator} from '@react-navigation/drawer';
+import {getHeaderTitle} from '@react-navigation/elements';
+
+const Drawer = createDrawerNavigator();
 
 function App() {
-  const drawer = useRef(null);
-  const [searchbarVisibility, setSearchbarVisibility] = useState(false);
-
-  function openDrawer() {
-    drawer.current.openDrawer();
-  }
-
-  function openSearch() {
-    if (!searchbarVisibility) {
-      setSearchbarVisibility(true);
-    } else {
-      setSearchbarVisibility(false);
-    }
-  }
-
-  function closeSearchbar() {
-    setSearchbarVisibility(false);
-  }
-
   return (
-    <DrawerLayoutAndroid
-      ref={drawer}
-      drawerWidth={300}
-      renderNavigationView={() => <Sidebar />}>
-      <View>
-        {!searchbarVisibility ? (
-          <Topbar openDrawer={openDrawer} openSearch={openSearch} />
-        ) : (
-          <Searchbar closeSearchbar={closeSearchbar} />
-        )}
-        <FlatList
-          contentContainerStyle={styles.scrollViewContent}
-          style={styles.scrollView}
-          data={categories}
-          keyExtractor={i => `${i.id}`}
-          renderItem={Category}
+    <NavigationContainer>
+      <Drawer.Navigator
+        drawerContent={props => <Sidebar {...props} />}
+        screenOptions={{
+          drawerStyle: {
+            backgroundColor: '#c6cbef',
+            width: 300,
+          },
+          header: ({navigation, route, options}) => {
+            const title = getHeaderTitle(options, route.name);
+
+            return (
+              <Topbar
+                title={title}
+                style={options.headerStyle}
+                navigation={navigation}
+              />
+            );
+          },
+        }}>
+        <Drawer.Screen name="Home" component={Home} />
+        <Drawer.Screen
+          options={{headerShown: false}}
+          name="Search"
+          component={Search}
         />
-      </View>
-    </DrawerLayoutAndroid>
+        <Drawer.Screen name="Cart" component={Cart} />
+        <Drawer.Screen name="Orders" component={Orders} />
+        <Drawer.Screen name="Account" component={Account} />
+        <Drawer.Screen name="Security" component={Security} />
+        <Drawer.Screen name="Category" component={Category} />
+        <Drawer.Screen name="Product" component={Product} />
+      </Drawer.Navigator>
+    </NavigationContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  scrollViewContent: {
-    paddingTop: 24,
-    paddingBottom: 64 + 24,
-    paddingLeft: 24,
-    paddingRight: 24,
-  },
-  scrollView: {
-    backgroundColor: 'white',
-    flexGrow: 1,
-  },
-});
 
 export default App;
