@@ -1,4 +1,4 @@
-package com.awesomeproject;
+package com.greensaucevalley.awesomeproject;
 
 import com.facebook.react.ReactActivity;
 

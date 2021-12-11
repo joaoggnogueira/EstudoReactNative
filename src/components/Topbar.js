@@ -1,6 +1,11 @@
 import React, {Component} from 'react';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
-import {faBars, faCoffee, faSearch} from '@fortawesome/free-solid-svg-icons';
+import {
+  faBars,
+  faCoffee,
+  faSearch,
+  faChevronLeft,
+} from '@fortawesome/free-solid-svg-icons';
 import {colors} from '../colors.js';
 import {View, Text, StyleSheet, TouchableHighlight} from 'react-native';
 
@@ -13,11 +18,17 @@ export default class Topbar extends Component {
         <View style={[styles.topbar, styles.elevation]}>
           <TouchableHighlight
             onPress={() => {
-              this.props.navigation.openDrawer();
+              this.props.showBack
+                ? this.props.navigation.goBack()
+                : this.props.navigation.openDrawer();
             }}>
             <View style={styles.navbutton}>
               <Text style={styles.navbutton_text}>
-                <FontAwesomeIcon icon={faBars} color={'white'} size={24} />
+                <FontAwesomeIcon
+                  icon={this.props.showBack ? faChevronLeft : faBars}
+                  color={'white'}
+                  size={24}
+                />
               </Text>
             </View>
           </TouchableHighlight>

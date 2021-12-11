@@ -33,6 +33,7 @@ function App() {
             return (
               <Topbar
                 title={title}
+                showBack={options.showBack}
                 style={options.headerStyle}
                 navigation={navigation}
               />

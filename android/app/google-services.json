@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "1045434974265",
+    "firebase_url": "https://browser-simulator.firebaseio.com",
+    "project_id": "browser-simulator",
+    "storage_bucket": "browser-simulator.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1045434974265:android:ab3e94b4b04af04115cde8",
+        "android_client_info": {
+          "package_name": "com.greensaucevalley.awesomeproject"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1045434974265-l0qpvclil5grhvaluri9enj9g9k336am.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDyrKrqk3SgMEIzTxG0ykjq_Hu3z8MH9r4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1045434974265-81d7ckc65lnl57jj014ibbj83qdi6m35.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
