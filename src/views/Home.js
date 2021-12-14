@@ -1,7 +1,7 @@
 import React from 'react';
 import CategoryItem from '../components/CategoryItem';
 
-import categories from '../provider/Categories';
+import {categories} from '../provider/Products';
 
 import {FlatList, StyleSheet} from 'react-native';
 

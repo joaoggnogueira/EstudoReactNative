@@ -9,8 +9,6 @@ import {
 import {colors} from '../colors.js';
 import {View, Text, StyleSheet, TouchableHighlight} from 'react-native';
 
-console.log(colors);
-
 export default class Topbar extends Component {
   render() {
     return (

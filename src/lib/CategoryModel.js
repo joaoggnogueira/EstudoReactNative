@@ -1,11 +1,18 @@
 export default class {
-  constructor(id, name, price, image_uri, category_id, ammount) {
+  constructor(id, name, image_uri) {
     this.id = id;
     this.name = name;
-    this.price = price;
+    this.price = Number.MAX_SAFE_INTEGER;
     this.image_uri = image_uri;
-    this.category_id = category_id;
-    this.ammount = ammount;
+    this.products = [];
+  }
+
+  push(product) {
+    this.price = Math.min(this.price, product.price);
+    this.products.push(product);
+  }
+  get ammount() {
+    return this.products.length;
   }
   getPriceStringFormat() {
     if (this.price.toString().indexOf('.') === -1) {
@@ -15,6 +22,15 @@ export default class {
     return this.price.toString().padEnd(4, 0);
   }
   toString() {
-    return this.name + ' (' + this.getPriceStringFormat() + ' R$)';
+    return (
+      this.id +
+      '-' +
+      this.name +
+      ' (' +
+      this.getPriceStringFormat() +
+      ' R$) ' +
+      this.ammount +
+      ' produtos'
+    );
   }
 }

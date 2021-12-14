@@ -10,7 +10,7 @@ import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faSearch, faTimes} from '@fortawesome/free-solid-svg-icons';
 import {colors} from '../colors.js';
 
-import products from '../provider/Products';
+import {products} from '../provider/Products';
 
 import ProductItem from '../components/ProductItem';
 

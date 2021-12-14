@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import Sidebar from './components/Sidebar';
 import Topbar from './components/Topbar';
 
@@ -14,10 +14,27 @@ import Product from './views/Product';
 import {NavigationContainer} from '@react-navigation/native';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import {getHeaderTitle} from '@react-navigation/elements';
+import messaging from '@react-native-firebase/messaging';
 
 const Drawer = createDrawerNavigator();
 
+function saveTokenToDatabase(token) {
+  console.log(token);
+}
+
 function App() {
+  useEffect(() => {
+    messaging()
+      .getToken()
+      .then(token => {
+        return saveTokenToDatabase(token);
+      });
+
+    return messaging().onTokenRefresh(token => {
+      saveTokenToDatabase(token);
+    });
+  }, []);
+
   return (
     <NavigationContainer>
       <Drawer.Navigator

@@ -1,8 +1,9 @@
 export default class {
-  constructor(id, name, price) {
+  constructor(id, name, price, category) {
     this.id = id;
     this.name = name;
     this.price = price;
+    this.category = category;
   }
   getPriceStringFormat() {
     if (this.price.toString().indexOf('.') === -1) {

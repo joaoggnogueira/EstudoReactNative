@@ -23,9 +23,7 @@ export default props => (
         <View style={styles.flexGrow} />
         <View style={styles.pricetag}>
           <Text style={styles.pricetag_text}>
-            {(props.item.category_id ? 'a partir de ' : '') +
-              props.item.getPriceStringFormat() +
-              ' R$'}
+            {'a partir de ' + props.item.getPriceStringFormat() + ' R$'}
           </Text>
         </View>
       </View>
