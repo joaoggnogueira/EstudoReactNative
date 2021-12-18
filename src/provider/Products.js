@@ -50,8 +50,12 @@ push('Quibe', 6.5);
 push('Pão de Queijo', 2);
 push('Pão com Mortadela', 5);
 push('Pão na Chapa', 4);
+push('Misto Quente', 4);
+push('Queijo Quente', 4);
 push('Pão de Queijo grande', 4);
-push('Torta', 6.5);
+push('Torta de Frango', 6.5);
+push('Torta de presunto e queijo', 6.5);
+push('Torta de bacon', 6.5);
 
 category(
   'bolos',
@@ -63,6 +67,8 @@ push('Bolo Brigadeiro', 7);
 push('Bolo Morango', 7);
 push('Bolo de Fubá', 7);
 push('Bolo de Milho', 7);
+push('Chessecake', 7);
+push('Bolo de cenoura com chocalate', 7);
 
 category(
   'refrigerantes',
@@ -88,9 +94,12 @@ push('Suco de Laranja 350ml', 5);
 push('Suco de Limão 350ml', 5);
 push('Suco de Abacaxi 350ml', 5);
 push('Suco de Maracuja 350ml', 5);
+push('Suco de uva', 6);
 push('Suco de Laranja com Leite 350ml', 6);
 push('Suco de Limão com Leite 350ml', 6);
 push('Suco de Abacaxi com Leite 350ml', 6);
+push('Suco de uva com leite', 7);
+push('Açai', 7);
 
 category(
   'agua  mineral',

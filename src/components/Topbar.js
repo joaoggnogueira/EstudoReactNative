@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {
   faBars,
-  faCoffee,
   faSearch,
   faChevronLeft,
 } from '@fortawesome/free-solid-svg-icons';
@@ -31,7 +30,6 @@ export default class Topbar extends Component {
             </View>
           </TouchableHighlight>
           <View style={styles.flexGrow} />
-          <FontAwesomeIcon icon={faCoffee} color={'white'} size={24} />
           <Text style={styles.header_text}>{this.props.title}</Text>
           <View style={styles.flexGrow} />
           <TouchableHighlight

@@ -1,7 +1,8 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useReducer} from 'react';
 import Sidebar from './components/Sidebar';
 import Topbar from './components/Topbar';
-import {View, Text} from 'react-native';
+import {View, Text, StyleSheet} from 'react-native';
+import {StateContext} from './state';
 
 import Search from './views/Search';
 import Home from './views/Home';
@@ -27,14 +28,27 @@ function saveTokenToDatabase(token) {
 function App() {
   const sheetRef = React.useRef(null);
 
+  const reducer = (state, action) => {
+    switch (action.type) {
+      case 'push':
+        console.warn('inserting ', action.item);
+        return {...state, cart: state.cart.concat([action.item])};
+      default:
+        return state;
+    }
+  };
+
   const renderContent = () => (
-    <View
-      style={{
-        backgroundColor: 'white',
-        padding: 16,
-        height: 450,
-      }}>
-      <Text style={{color: 'black'}}>Swipe down to close</Text>
+    <View style={styles.swipe}>
+      <StateContext.Consumer>
+        {value =>
+          value[0].cart.map((item, index) => (
+            <Text style={styles.swipe_text} key={index}>
+              {item.name}
+            </Text>
+          ))
+        }
+      </StateContext.Consumer>
     </View>
   );
 
@@ -44,7 +58,7 @@ function App() {
       snapPoints={[450, 300, 0]}
       borderRadius={10}
       renderContent={renderContent}
-      initialSnap={2}
+      initialSnap={1}
     />
   );
   useEffect(() => {
@@ -60,46 +74,91 @@ function App() {
   }, []);
 
   return (
-    <View style={{flex: 1, width: '100%'}}>
-      <NavigationContainer>
-        <Drawer.Navigator
-          drawerContent={props => <Sidebar {...props} />}
-          backBehavior="history"
-          screenOptions={{
-            drawerStyle: {
-              backgroundColor: '#c6cbef',
-              width: 300,
-            },
-            header: ({navigation, route, options}) => {
-              const title = getHeaderTitle(options, route.name);
+    <StateContext.Provider value={useReducer(reducer, {cart: []})}>
+      <View style={styles.container}>
+        <NavigationContainer>
+          <Drawer.Navigator
+            drawerContent={props => <Sidebar {...props} />}
+            backBehavior="history"
+            screenOptions={{
+              drawerStyle: {
+                backgroundColor: '#c6cbef',
+                width: 300,
+              },
+              header: ({navigation, route, options}) => {
+                const title = getHeaderTitle(options, route.name);
 
-              return (
-                <Topbar
-                  title={title}
-                  showBack={options.showBack}
-                  style={options.headerStyle}
-                  navigation={navigation}
-                />
-              );
-            },
-          }}>
-          <Drawer.Screen name="Home" component={Home} />
-          <Drawer.Screen
-            options={{headerShown: false}}
-            name="Search"
-            component={Search}
-          />
-          <Drawer.Screen name="Cart" component={Cart} />
-          <Drawer.Screen name="Orders" component={Orders} />
-          <Drawer.Screen name="Account" component={Account} />
-          <Drawer.Screen name="Security" component={Security} />
-          <Drawer.Screen name="Category" component={Category} />
-          <Drawer.Screen name="Product" component={Product} />
-        </Drawer.Navigator>
-      </NavigationContainer>
-      <BottomBar />
-    </View>
+                return (
+                  <Topbar
+                    title={title}
+                    showBack={options.showBack}
+                    style={options.headerStyle}
+                    navigation={navigation}
+                  />
+                );
+              },
+            }}>
+            <Drawer.Screen
+              name="Home"
+              options={{title: 'Cardápio'}}
+              component={Home}
+            />
+            <Drawer.Screen
+              options={{headerShown: false}}
+              name="Search"
+              component={Search}
+            />
+            <Drawer.Screen
+              name="Cart"
+              options={{title: 'Carrinho'}}
+              component={Cart}
+            />
+            <Drawer.Screen
+              name="Orders"
+              options={{title: 'Pedidos'}}
+              component={Orders}
+            />
+            <Drawer.Screen
+              name="Account"
+              options={{title: 'Carrinho'}}
+              component={Account}
+            />
+            <Drawer.Screen
+              name="Security"
+              options={{title: 'Segurança'}}
+              component={Security}
+            />
+            <Drawer.Screen
+              name="Category"
+              options={{title: ''}}
+              component={Category}
+            />
+            <Drawer.Screen
+              name="Product"
+              options={{title: ''}}
+              component={Product}
+            />
+          </Drawer.Navigator>
+        </NavigationContainer>
+        <BottomBar />
+      </View>
+    </StateContext.Provider>
   );
 }
 
 export default App;
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    width: '100%',
+  },
+  swipe: {
+    backgroundColor: 'white',
+    padding: 16,
+    height: 450,
+  },
+  swipe_text: {
+    color: 'black',
+  },
+});

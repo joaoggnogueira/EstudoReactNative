@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
-import {Text, View, StyleSheet, Button} from 'react-native';
+import {Text, View, StyleSheet} from 'react-native';
+import PushButton from '../components/PushButton.js';
 
 export default class Item extends Component {
   constructor(props) {
@@ -20,9 +21,6 @@ export default class Item extends Component {
       showBack: true,
     });
   }
-  onPressLearnMore() {
-    console.log('inserting this product');
-  }
 
   render() {
     const item = this.props.route.params.item;
@@ -32,14 +30,9 @@ export default class Item extends Component {
           <Text style={styles.title}>
             Preço {item.getPriceStringFormat()} R$
           </Text>
-          <Button
-            onPress={() => this.onPressLearnMore()}
-            title="Colocar no carrinho"
-            color="#841584"
-            accessibilityLabel="Learn more about this purple button"
-          />
+          <PushButton item={item} />
         </View>
-        <Text style={{color: 'black', padding: 24}}>
+        <Text style={styles.text}>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
           eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
           minim veniam, quis nostrud exercitation ullamco laboris nisi ut
@@ -69,5 +62,8 @@ const styles = StyleSheet.create({
   paddingView: {
     padding: 24,
   },
-  text: {},
+  text: {
+    color: 'black',
+    padding: 24,
+  },
 });
