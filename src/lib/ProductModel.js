@@ -3,7 +3,7 @@ export default class {
     this.id = id;
     this.name = name;
     this.price = price;
-    this.category = category;
+    this.category = category.id;
   }
   getPriceStringFormat() {
     if (this.price.toString().indexOf('.') === -1) {

@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Text, View, StyleSheet} from 'react-native';
+import {Text, View, StyleSheet, Button} from 'react-native';
 
 export default class Item extends Component {
   constructor(props) {
@@ -20,6 +20,9 @@ export default class Item extends Component {
       showBack: true,
     });
   }
+  onPressLearnMore() {
+    console.log('inserting this product');
+  }
 
   render() {
     const item = this.props.route.params.item;
@@ -29,7 +32,22 @@ export default class Item extends Component {
           <Text style={styles.title}>
             Preço {item.getPriceStringFormat()} R$
           </Text>
+          <Button
+            onPress={() => this.onPressLearnMore()}
+            title="Colocar no carrinho"
+            color="#841584"
+            accessibilityLabel="Learn more about this purple button"
+          />
         </View>
+        <Text style={{color: 'black', padding: 24}}>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
+          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+          aliquip ex ea commodo consequat. Duis aute irure dolor in
+          reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+          pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+          culpa qui officia deserunt mollit anim id est laborum.
+        </Text>
       </View>
     );
   }

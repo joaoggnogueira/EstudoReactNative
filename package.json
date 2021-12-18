@@ -6,8 +6,10 @@
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "start": "react-native start",
+    "start_reseted": "react-native start --reset-cache",
     "test": "jest",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "link": "react-native link"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.36",
@@ -15,18 +17,21 @@
     "@fortawesome/react-native-fontawesome": "^0.2.7",
     "@react-native-firebase/app": "^13.1.0",
     "@react-native-firebase/messaging": "^13.1.0",
+    "@react-navigation/bottom-tabs": "^6.0.9",
     "@react-navigation/drawer": "^6.1.8",
     "@react-navigation/native": "^6.0.6",
     "@react-navigation/native-stack": "^6.2.5",
+    "@react-navigation/stack": "^6.0.11",
     "react": "17.0.2",
     "react-native": "0.66.2",
     "react-native-gesture-handler": "^1.10.3",
-    "react-native-reanimated": "^2.2.4",
+    "react-native-reanimated": "^2.3.1",
     "react-native-safe-area-context": "^3.3.2",
     "react-native-screens": "^3.9.0",
     "react-native-select-dropdown": "^1.5.0",
     "react-native-svg": "^12.1.1",
-    "react-native-webview": "^11.14.2"
+    "react-native-webview": "^11.14.2",
+    "reanimated-bottom-sheet": "^1.0.0-alpha.22"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
