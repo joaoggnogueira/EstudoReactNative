@@ -1,7 +1,10 @@
 import React, {useEffect, useReducer} from 'react';
 import Sidebar from './components/Sidebar';
 import Topbar from './components/Topbar';
-import {View, Text, StyleSheet} from 'react-native';
+import CartSheetContent from './components/CartSheetContent';
+import CartSheetHeader from './components/CartSheetHeader';
+
+import {View, StyleSheet} from 'react-native';
 import {StateContext} from './state';
 
 import Search from './views/Search';
@@ -17,7 +20,6 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import {getHeaderTitle} from '@react-navigation/elements';
 import messaging from '@react-native-firebase/messaging';
-import BottomSheet from 'reanimated-bottom-sheet';
 
 const Drawer = createDrawerNavigator();
 
@@ -26,41 +28,23 @@ function saveTokenToDatabase(token) {
 }
 
 function App() {
-  const sheetRef = React.useRef(null);
+  const globalState = {cart: [], showCartSheet: true};
 
   const reducer = (state, action) => {
     switch (action.type) {
       case 'push':
-        console.warn('inserting ', action.item);
         return {...state, cart: state.cart.concat([action.item])};
+      case 'open_cart_sheet':
+        return {...state, showCartSheet: true};
+      case 'close_cart_sheet':
+        return {...state, showCartSheet: false};
+      case 'toggle_cart_sheet':
+        return {...state, showCartSheet: !state.showCartSheet};
       default:
         return state;
     }
   };
 
-  const renderContent = () => (
-    <View style={styles.swipe}>
-      <StateContext.Consumer>
-        {value =>
-          value[0].cart.map((item, index) => (
-            <Text style={styles.swipe_text} key={index}>
-              {item.name}
-            </Text>
-          ))
-        }
-      </StateContext.Consumer>
-    </View>
-  );
-
-  const BottomBar = () => (
-    <BottomSheet
-      ref={sheetRef}
-      snapPoints={[450, 300, 0]}
-      borderRadius={10}
-      renderContent={renderContent}
-      initialSnap={1}
-    />
-  );
   useEffect(() => {
     messaging()
       .getToken()
@@ -74,7 +58,7 @@ function App() {
   }, []);
 
   return (
-    <StateContext.Provider value={useReducer(reducer, {cart: []})}>
+    <StateContext.Provider value={useReducer(reducer, globalState)}>
       <View style={styles.container}>
         <NavigationContainer>
           <Drawer.Navigator
@@ -140,7 +124,10 @@ function App() {
             />
           </Drawer.Navigator>
         </NavigationContainer>
-        <BottomBar />
+        <View>
+          <CartSheetHeader />
+          <CartSheetContent />
+        </View>
       </View>
     </StateContext.Provider>
   );
@@ -151,14 +138,7 @@ export default App;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    width: '100%',
-  },
-  swipe: {
     backgroundColor: 'white',
-    padding: 16,
-    height: 450,
-  },
-  swipe_text: {
-    color: 'black',
+    width: '100%',
   },
 });
