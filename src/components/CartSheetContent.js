@@ -1,37 +1,63 @@
 import React from 'react';
-import {View, Text, StyleSheet} from 'react-native';
-import {StateContext} from '../state';
+import {View, ScrollView, Text, StyleSheet} from 'react-native';
 
-export default () => {
+function priceToString(price) {
+  if (price.toString().indexOf('.') === -1) {
+    return price + '.00';
+  }
+  return price.toString().padEnd(4, 0);
+}
+
+export default props => {
+  const total = props.state.cart.reduce((acc, item) => acc + item.price, 0);
   return (
-    <StateContext.Consumer>
-      {value => (
-        <View
-          style={[
-            styles.swipe,
-            value[0].showCartSheet ? styles.swipe_opened : styles.swipe_closed,
-          ]}>
-          {value[0].cart.map((item, index) => (
-            <Text style={styles.swipe_text} key={index}>
-              {item.name}
+    <View style={styles.swipe}>
+      <ScrollView style={styles.scrollView}>
+        {props.state.cart.map((item, index) => (
+          <View style={styles.cart_item} key={index}>
+            <Text style={styles.swipe_text}>{item.name}</Text>
+            <Text style={styles.swipe_text}>
+              {item.getPriceStringFormat()} R$
             </Text>
-          ))}
-        </View>
-      )}
-    </StateContext.Consumer>
+          </View>
+        ))}
+      </ScrollView>
+      <View style={styles.footer_container}>
+        <Text style={styles.swipe_text}>
+          Preço total: {priceToString(total)}
+        </Text>
+      </View>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
+  scrollView: {
+    maxHeight: 300,
+  },
   swipe: {
     backgroundColor: 'white',
-  },
-  swipe_closed: {
-    height: 0,
-  },
-  swipe_opened: {
-    padding: 16,
     height: 300,
+  },
+  cart_item: {
+    height: 64,
+    marginBottom: 2,
+    paddingLeft: 24,
+    paddingRight: 24,
+    backgroundColor: '#FAFAFA',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  footer_container: {
+    height: 64,
+    marginBottom: 2,
+    paddingLeft: 24,
+    paddingRight: 24,
+    backgroundColor: '#EEE',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
   swiper_header_container: {
     height: 64,

@@ -1,10 +1,10 @@
-import React, {useEffect, useReducer} from 'react';
+import React, {useEffect, useRef, useReducer} from 'react';
 import Sidebar from './components/Sidebar';
 import Topbar from './components/Topbar';
 import CartSheetContent from './components/CartSheetContent';
 import CartSheetHeader from './components/CartSheetHeader';
 
-import {View, StyleSheet} from 'react-native';
+import {View, StyleSheet, Animated} from 'react-native';
 import {StateContext} from './state';
 
 import Search from './views/Search';
@@ -28,7 +28,7 @@ function saveTokenToDatabase(token) {
 }
 
 function App() {
-  const globalState = {cart: [], showCartSheet: true};
+  const globalState = {cart: [], showCartSheet: false};
 
   const reducer = (state, action) => {
     switch (action.type) {
@@ -56,6 +56,24 @@ function App() {
       saveTokenToDatabase(token);
     });
   }, []);
+
+  const heightAnim = useRef(new Animated.Value(300)).current;
+
+  const CartSheet = ([state]) => {
+    Animated.timing(heightAnim, {
+      toValue: state.showCartSheet ? 0 : 300,
+      duration: 200,
+      useNativeDriver: true,
+    }).start();
+
+    return (
+      <Animated.View
+        style={[styles.cartSheet, {transform: [{translateY: heightAnim}]}]}>
+        <CartSheetHeader state={state} />
+        <CartSheetContent state={state} />
+      </Animated.View>
+    );
+  };
 
   return (
     <StateContext.Provider value={useReducer(reducer, globalState)}>
@@ -124,10 +142,9 @@ function App() {
             />
           </Drawer.Navigator>
         </NavigationContainer>
-        <View>
-          <CartSheetHeader />
-          <CartSheetContent />
-        </View>
+        <StateContext.Consumer>
+          {value => CartSheet(value)}
+        </StateContext.Consumer>
       </View>
     </StateContext.Provider>
   );
@@ -137,8 +154,15 @@ export default App;
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     backgroundColor: 'white',
     width: '100%',
+    flex: 1,
+    paddingBottom: 64,
+  },
+  cartSheet: {
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
   },
 });
