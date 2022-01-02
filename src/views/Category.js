@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {FlatList, View, StyleSheet, Image, Text} from 'react-native';
 import ProductItem from '../components/ProductItem';
 import SelectDropdown from 'react-native-select-dropdown';
+
 import {colors} from '../colors.js';
 
 const countries = ['relevantes', 'menor preço'];
@@ -36,19 +37,22 @@ export default class Category extends Component {
     const category = this.props.route.params.item;
     return (
       <View style={styles.container}>
-        <Image style={styles.imagewrap} source={{uri: category.image_uri}} />
-        <View style={styles.row}>
-          <Text style={styles.rowText}>Ordernar por: </Text>
-          <SelectDropdown
-            data={countries}
-            buttonStyle={styles.selectButton}
-            buttonTextStyle={styles.selectButtonText}
-            defaultValueByIndex={0}
-            onSelect={(selectedItem, index) => {
-              console.log(selectedItem, index);
-            }}
-          />
+        <View>
+          <Image style={styles.imagewrap} source={{uri: category.image_uri}} />
+          <View style={styles.row}>
+            <Text style={styles.rowText}>Ordernar por: </Text>
+            <SelectDropdown
+              data={countries}
+              buttonStyle={styles.selectButton}
+              buttonTextStyle={styles.selectButtonText}
+              defaultValueByIndex={0}
+              onSelect={(selectedItem, index) => {
+                console.log(selectedItem, index);
+              }}
+            />
+          </View>
         </View>
+
         <View style={styles.listContainer}>
           <FlatList
             contentContainerStyle={styles.scrollViewContent}
@@ -76,7 +80,6 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    alignItems: 'stretch',
   },
   imagewrap: {
     width: '100%',
@@ -112,7 +115,7 @@ const styles = StyleSheet.create({
     elevation: 2,
   },
   listContainer: {
-    flexGrow: 1,
+    flex: 1,
   },
   scrollViewContent: {
     paddingBottom: 32,

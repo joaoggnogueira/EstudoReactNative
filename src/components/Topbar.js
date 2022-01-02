@@ -3,8 +3,10 @@ import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {
   faBars,
   faSearch,
+  faShoppingCart,
   faChevronLeft,
 } from '@fortawesome/free-solid-svg-icons';
+import {StateContext} from '../state';
 import {colors} from '../colors.js';
 import {View, Text, StyleSheet, TouchableHighlight} from 'react-native';
 
@@ -14,32 +16,58 @@ export default class Topbar extends Component {
       <>
         <View style={[styles.topbar, styles.elevation]}>
           <TouchableHighlight
+            underlayColor="#FFFFFF44"
+            style={styles.navbutton_touchableHighlight}
             onPress={() => {
               this.props.showBack
                 ? this.props.navigation.goBack()
                 : this.props.navigation.openDrawer();
             }}>
             <View style={styles.navbutton}>
-              <Text style={styles.navbutton_text}>
-                <FontAwesomeIcon
-                  icon={this.props.showBack ? faChevronLeft : faBars}
-                  color={'white'}
-                  size={24}
-                />
-              </Text>
+              <FontAwesomeIcon
+                icon={this.props.showBack ? faChevronLeft : faBars}
+                color={colors.primary}
+                size={24}
+              />
             </View>
           </TouchableHighlight>
-          <View style={styles.flexGrow} />
           <Text style={styles.header_text}>{this.props.title}</Text>
           <View style={styles.flexGrow} />
           <TouchableHighlight
+            underlayColor="#FFFFFF44"
+            onPress={() => {}}
+            style={styles.navbutton_touchableHighlight}>
+            <View style={styles.navbutton}>
+              <FontAwesomeIcon
+                icon={faShoppingCart}
+                color={colors.primary}
+                size={24}
+              />
+              <StateContext.Consumer>
+                {([state]) =>
+                  state.cart.length ? (
+                    <View style={styles.navbutton_counter}>
+                      <Text style={styles.navbutton_counter_text}>
+                        {state.cart.length}
+                      </Text>
+                    </View>
+                  ) : null
+                }
+              </StateContext.Consumer>
+            </View>
+          </TouchableHighlight>
+          <TouchableHighlight
+            underlayColor="#FFFFFF44"
+            style={styles.navbutton_touchableHighlight}
             onPress={() => {
               this.props.navigation.navigate('Search');
             }}>
             <View style={styles.navbutton}>
-              <Text style={styles.navbutton_text}>
-                <FontAwesomeIcon icon={faSearch} color={'white'} size={24} />
-              </Text>
+              <FontAwesomeIcon
+                icon={faSearch}
+                color={colors.primary}
+                size={24}
+              />
             </View>
           </TouchableHighlight>
         </View>
@@ -53,34 +81,45 @@ const styles = StyleSheet.create({
     flexGrow: 1,
   },
   header_text: {
-    color: '#FFF',
+    color: colors.primary,
     textAlign: 'center',
     fontWeight: '200',
     fontSize: 16,
+    maxWidth: 180,
     marginLeft: 4,
+  },
+  navbutton_counter_text: {
+    fontSize: 12,
+    fontWeight: '900',
+    textAlign: 'center',
+  },
+  navbutton_counter: {
+    position: 'absolute',
+    width: 24,
+    height: 24,
+    backgroundColor: 'purple',
+    borderRadius: 12,
+    right: 2,
+    top: 8,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  navbutton_touchableHighlight: {
+    borderRadius: 32,
   },
   navbutton: {
     height: 64,
-    marginRight: 24,
-    marginLeft: 24,
+    width: 64,
+    alignItems: 'center',
     justifyContent: 'center',
-  },
-  navbutton_text: {
-    color: '#FFF',
   },
   topbar: {
     zIndex: 3,
     flexDirection: 'row',
-    backgroundColor: colors.primary,
+    backgroundColor: 'white',
     height: 64,
     width: '100%',
     alignItems: 'center',
   },
-  elevation: {
-    shadowColor: '#000',
-    shadowOffset: {width: 0, height: 2},
-    shadowOpacity: 0.5,
-    shadowRadius: 2,
-    elevation: 10,
-  },
+  elevation: {},
 });
