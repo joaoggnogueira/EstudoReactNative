@@ -1,6 +1,7 @@
 import React from 'react';
 import {Button} from 'react-native';
 import {useStateValue} from '../state';
+import {colors} from '../colors';
 
 export default props => {
   const [state, dispatch] = useStateValue();
@@ -17,7 +18,7 @@ export default props => {
     <Button
       onPress={() => onPressLearnMore(props.item)}
       title="Colocar no carrinho"
-      color="#841584"
+      color={colors.secondary}
       accessibilityLabel="Learn more about this purple button"
     />
   );

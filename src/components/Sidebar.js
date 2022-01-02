@@ -22,7 +22,6 @@ export default class Sidebar extends Component {
       <View style={styles.navigationContainer}>
         <View style={styles.row}>
           <FontAwesomeIcon icon={faCoffee} color={'white'} size={24} />
-          <Text style={styles.header_text}>Jopahannas</Text>
         </View>
         <SidebarButton
           text="Home"

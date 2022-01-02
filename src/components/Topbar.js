@@ -97,7 +97,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     width: 24,
     height: 24,
-    backgroundColor: 'purple',
+    backgroundColor: colors.secondary,
     borderRadius: 12,
     right: 2,
     top: 8,
