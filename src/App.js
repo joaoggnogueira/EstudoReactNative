@@ -3,7 +3,7 @@ import Sidebar from './components/Sidebar';
 import Topbar from './components/Topbar';
 
 import {View, StyleSheet} from 'react-native';
-import {StateContext} from './state';
+import {StateContext, globalState, reducer} from './state';
 
 import Search from './views/Search';
 import Home from './views/Home';
@@ -26,23 +26,6 @@ function saveTokenToDatabase(token) {
 }
 
 function App() {
-  const globalState = {cart: [], showCartSheet: false};
-
-  const reducer = (state, action) => {
-    switch (action.type) {
-      case 'push':
-        return {...state, cart: state.cart.concat([action.item])};
-      case 'open_cart_sheet':
-        return {...state, showCartSheet: true};
-      case 'close_cart_sheet':
-        return {...state, showCartSheet: false};
-      case 'toggle_cart_sheet':
-        return {...state, showCartSheet: !state.showCartSheet};
-      default:
-        return state;
-    }
-  };
-
   useEffect(() => {
     messaging()
       .getToken()

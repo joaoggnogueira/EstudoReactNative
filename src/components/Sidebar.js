@@ -20,11 +20,9 @@ export default class Sidebar extends Component {
   render() {
     return (
       <View style={styles.navigationContainer}>
-        <View style={styles.row}>
-          <FontAwesomeIcon icon={faCoffee} color={'white'} size={24} />
-        </View>
+        <View style={styles.row} />
         <SidebarButton
-          text="Home"
+          text="Cardápio"
           icon={faHome}
           onPress={() => this.props.navigation.navigate('Home')}
         />

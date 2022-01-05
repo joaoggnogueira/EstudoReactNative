@@ -35,7 +35,9 @@ export default class Topbar extends Component {
           <View style={styles.flexGrow} />
           <TouchableHighlight
             underlayColor="#FFFFFF44"
-            onPress={() => {}}
+            onPress={() => {
+              this.props.navigation.navigate('Cart');
+            }}
             style={styles.navbutton_touchableHighlight}>
             <View style={styles.navbutton}>
               <FontAwesomeIcon
