@@ -1,11 +1,8 @@
 import React, {Component} from 'react';
 
-import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
-
 import {View, Text, StyleSheet, Platform} from 'react-native';
 import {colors} from '../colors.js';
 import {
-  faCoffee,
   faUserCircle,
   faShoppingCart,
   faBookmark,
@@ -27,11 +24,6 @@ export default class Sidebar extends Component {
           onPress={() => this.props.navigation.navigate('Home')}
         />
         <SidebarButton
-          text="Conta"
-          icon={faUserCircle}
-          onPress={() => this.props.navigation.navigate('Account')}
-        />
-        <SidebarButton
           text="Carrinho"
           icon={faShoppingCart}
           onPress={() => this.props.navigation.navigate('Cart')}
@@ -40,6 +32,11 @@ export default class Sidebar extends Component {
           text="Meus Pedidos"
           icon={faBookmark}
           onPress={() => this.props.navigation.navigate('Orders')}
+        />
+        <SidebarButton
+          text="Conta"
+          icon={faUserCircle}
+          onPress={() => this.props.navigation.navigate('Account')}
         />
         <SidebarButton
           text="Segurança"
@@ -56,7 +53,7 @@ export default class Sidebar extends Component {
 
 const styles = StyleSheet.create({
   navigationContainer: {
-    backgroundColor: colors.primary,
+    backgroundColor: colors.secondary,
     paddingTop: 24,
     paddingBottom: 24,
     flex: 1,

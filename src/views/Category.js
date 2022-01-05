@@ -29,7 +29,6 @@ export default class Category extends Component {
     const category = _props.route.params.item;
     navigation.setOptions({
       title: category.name,
-      showBack: true,
     });
   }
 
@@ -99,12 +98,11 @@ const styles = StyleSheet.create({
     marginLeft: 24,
     marginRight: 8,
     width: 150,
-    borderRadius: 16,
     height: 32,
-    backgroundColor: '#FFFFFF44',
+    backgroundColor: '#FFFFFF',
   },
   selectButtonText: {
-    color: 'white',
+    color: colors.primary,
   },
   rowText: {color: 'white'},
   row: {

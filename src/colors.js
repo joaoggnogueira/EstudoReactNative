@@ -1,4 +1,4 @@
 export const colors = {
-  primary: 'maroon',
-  secondary: 'teal',
+  primary: '#005050',
+  secondary: '#008080',
 };

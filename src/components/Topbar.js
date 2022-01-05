@@ -16,7 +16,7 @@ export default class Topbar extends Component {
       <>
         <View style={[styles.topbar, styles.elevation]}>
           <TouchableHighlight
-            underlayColor="#FFFFFF44"
+            underlayColor={colors.secondary + '44'}
             style={styles.navbutton_touchableHighlight}
             onPress={() => {
               this.props.showBack
@@ -33,33 +33,35 @@ export default class Topbar extends Component {
           </TouchableHighlight>
           <Text style={styles.header_text}>{this.props.title}</Text>
           <View style={styles.flexGrow} />
+          {this.props.hideCart ? null : (
+            <TouchableHighlight
+              underlayColor={colors.secondary + '44'}
+              onPress={() => {
+                this.props.navigation.navigate('Cart');
+              }}
+              style={styles.navbutton_touchableHighlight}>
+              <View style={styles.navbutton}>
+                <FontAwesomeIcon
+                  icon={faShoppingCart}
+                  color={colors.primary}
+                  size={24}
+                />
+                <StateContext.Consumer>
+                  {([state]) =>
+                    state.cart.length ? (
+                      <View style={styles.navbutton_counter}>
+                        <Text style={styles.navbutton_counter_text}>
+                          {state.cart.reduce((acc, d) => acc + d.quantity, 0)}
+                        </Text>
+                      </View>
+                    ) : null
+                  }
+                </StateContext.Consumer>
+              </View>
+            </TouchableHighlight>
+          )}
           <TouchableHighlight
-            underlayColor="#FFFFFF44"
-            onPress={() => {
-              this.props.navigation.navigate('Cart');
-            }}
-            style={styles.navbutton_touchableHighlight}>
-            <View style={styles.navbutton}>
-              <FontAwesomeIcon
-                icon={faShoppingCart}
-                color={colors.primary}
-                size={24}
-              />
-              <StateContext.Consumer>
-                {([state]) =>
-                  state.cart.length ? (
-                    <View style={styles.navbutton_counter}>
-                      <Text style={styles.navbutton_counter_text}>
-                        {state.cart.length}
-                      </Text>
-                    </View>
-                  ) : null
-                }
-              </StateContext.Consumer>
-            </View>
-          </TouchableHighlight>
-          <TouchableHighlight
-            underlayColor="#FFFFFF44"
+            underlayColor={colors.secondary + '44'}
             style={styles.navbutton_touchableHighlight}
             onPress={() => {
               this.props.navigation.navigate('Search');

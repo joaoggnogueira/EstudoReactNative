@@ -57,6 +57,7 @@ function App() {
                   <Topbar
                     title={title}
                     showBack={options.showBack}
+                    hideCart={options.hideCart}
                     style={options.headerStyle}
                     navigation={navigation}
                   />
@@ -75,7 +76,7 @@ function App() {
             />
             <Drawer.Screen
               name="Cart"
-              options={{title: 'Carrinho'}}
+              options={{title: 'Carrinho', headerShown: false}}
               component={Cart}
             />
             <Drawer.Screen
@@ -85,7 +86,7 @@ function App() {
             />
             <Drawer.Screen
               name="Account"
-              options={{title: 'Carrinho'}}
+              options={{title: 'Conta'}}
               component={Account}
             />
             <Drawer.Screen
@@ -95,7 +96,7 @@ function App() {
             />
             <Drawer.Screen
               name="Category"
-              options={{title: ''}}
+              options={{title: '', showBack: true}}
               component={Category}
             />
             <Drawer.Screen
