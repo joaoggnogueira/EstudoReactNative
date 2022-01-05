@@ -1,16 +1,12 @@
-import React from 'react';
-import {
-  Text,
-  View,
-  StyleSheet,
-  FlatList,
-  TouchableHighlight,
-} from 'react-native';
-import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
+import React, {useState} from 'react';
+import {Text, View, StyleSheet, FlatList} from 'react-native';
 import {faTimes} from '@fortawesome/free-solid-svg-icons';
 import {StateContext} from '../state';
 import {colors} from '../colors';
 import OrderItem from '../components/OrderItem';
+import Dialog from '../components/Dialog';
+import EditOrderDialog from '../components/EditOrderDialog';
+import FabButton from '../components/FabButton';
 
 function priceToString(price) {
   if (price.toString().indexOf('.') === -1) {
@@ -19,45 +15,61 @@ function priceToString(price) {
   return price.toString().padEnd(4, 0);
 }
 
-const CartView = (state, props) => {
-  const total = state.cart.reduce(
-    (acc, item) => acc + item.quantity * item.product.price,
-    0,
-  );
+export default props => {
+  const [ItemSelected, setItemSelected] = useState(null);
   return (
-    <View style={styles.container}>
-      <View style={[styles.header_container, styles.row]}>
-        <Text style={styles.textWhite}>Carrinho</Text>
-        <TouchableHighlight
-          underlayColor={colors.secondary + '44'}
-          style={styles.navbutton_touchableHighlight}
-          onPress={() => {
-            props.navigation.goBack();
-          }}>
-          <View style={styles.navbutton}>
-            <FontAwesomeIcon icon={faTimes} color={'white'} size={24} />
-          </View>
-        </TouchableHighlight>
-      </View>
-      <View style={[styles.price_container, styles.row]}>
-        <Text style={styles.text}>Preço total: {priceToString(total)} R$</Text>
-      </View>
-      <FlatList
-        contentContainerStyle={styles.scrollViewContent}
-        style={styles.scrollView}
-        data={state.cart}
-        keyExtractor={i => `${i.product.id}`}
-        renderItem={({item}) => <OrderItem item={item} />}
-      />
-    </View>
+    <StateContext.Consumer>
+      {([state]) => {
+        const total = state.cart.reduce(
+          (acc, item) => acc + item.quantity * item.product.price,
+          0,
+        );
+
+        const onPress = function (item) {
+          setItemSelected(item);
+        };
+
+        const closeEdit = function () {
+          setItemSelected(null);
+        };
+
+        return (
+          <>
+            <View style={styles.container}>
+              <View style={[styles.header_container, styles.row]}>
+                <Text style={styles.textWhite}>Carrinho</Text>
+                <FabButton
+                  onPress={() => props.navigation.goBack()}
+                  icon={faTimes}
+                  iconColor={'white'}
+                />
+              </View>
+              <View style={[styles.price_container, styles.row]}>
+                <Text style={styles.text}>
+                  Preço total: {priceToString(total)} R$
+                </Text>
+              </View>
+              <FlatList
+                contentContainerStyle={styles.scrollViewContent}
+                style={styles.scrollView}
+                data={state.cart}
+                keyExtractor={i => `${i.product.id}`}
+                renderItem={({item}) => (
+                  <OrderItem onPress={onPress} item={item} />
+                )}
+              />
+            </View>
+            {ItemSelected ? (
+              <Dialog onClose={closeEdit}>
+                <EditOrderDialog item={ItemSelected} onClose={closeEdit} />
+              </Dialog>
+            ) : null}
+          </>
+        );
+      }}
+    </StateContext.Consumer>
   );
 };
-
-export default props => (
-  <StateContext.Consumer>
-    {value => CartView(value[0], props)}
-  </StateContext.Consumer>
-);
 
 const styles = StyleSheet.create({
   container: {

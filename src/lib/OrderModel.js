@@ -6,4 +6,7 @@ export default class {
   increase() {
     this.quantity++;
   }
+  decrease() {
+    this.quantity--;
+  }
 }

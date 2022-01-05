@@ -7,6 +7,14 @@ export const useStateValue = () => useContext(StateContext);
 export const globalState = {cart: []};
 
 const actions = {
+  pop(state, action) {
+    const find = state.cart.find(d => d.product.id === action.item.id);
+    find.decrease();
+    if (find.quantity === 0) {
+      state.cart.splice(state.cart.indexOf(find), 1);
+    }
+    return {...state};
+  },
   push(state, action) {
     const find = state.cart.find(d => d.product.id === action.item.id);
     if (find) {

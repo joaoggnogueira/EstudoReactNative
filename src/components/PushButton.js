@@ -4,10 +4,9 @@ import {useStateValue} from '../state';
 import {colors} from '../colors';
 
 export default props => {
-  const [state, dispatch] = useStateValue();
+  const dispatch = useStateValue()[1];
 
   const onPressLearnMore = () => {
-    console.log('inserting this product');
     dispatch({
       type: 'push',
       item: props.item,

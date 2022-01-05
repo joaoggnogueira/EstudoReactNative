@@ -1,15 +1,28 @@
 import React from 'react';
-import {Text, View, StyleSheet} from 'react-native';
+import {Text, View, StyleSheet, TouchableHighlight} from 'react-native';
 
-export default ({item}) => (
-  <View style={styles.cart_item}>
-    <Text style={styles.text}>
-      {item.quantity}x {item.product.name}
-    </Text>
-    <View style={styles.flexGrow} />
-    <Text style={styles.text}>{item.product.getPriceStringFormat()} R$</Text>
-  </View>
-);
+import {colors} from '../colors';
+
+export default ({item, onPress}) => {
+  return (
+    <TouchableHighlight
+      underlayColor={colors.secondary + '44'}
+      style={styles.navbutton_touchableHighlight}
+      onPress={() => {
+        onPress(item);
+      }}>
+      <View style={styles.cart_item}>
+        <Text style={styles.text}>
+          {item.quantity}x {item.product.name}
+        </Text>
+        <View style={styles.flexGrow} />
+        <Text style={styles.text}>
+          {item.product.getPriceStringFormat()} R$
+        </Text>
+      </View>
+    </TouchableHighlight>
+  );
+};
 
 const styles = StyleSheet.create({
   flexGrow: {

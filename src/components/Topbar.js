@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {
   faBars,
   faSearch,
@@ -8,72 +7,50 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import {StateContext} from '../state';
 import {colors} from '../colors.js';
-import {View, Text, StyleSheet, TouchableHighlight} from 'react-native';
+import {View, Text, StyleSheet} from 'react-native';
+import FabButton from '../components/FabButton';
 
 export default class Topbar extends Component {
+  goBack() {
+    this.props.navigation.goBack();
+  }
+  openDrawer() {
+    this.props.navigation.openDrawer();
+  }
+  goToCart() {
+    this.props.navigation.navigate('Cart');
+  }
+  openSearch() {
+    this.props.navigation.navigate('Search');
+  }
+  cartCounterRender([state]) {
+    return state.cart.length ? (
+      <View style={styles.navbutton_counter}>
+        <Text style={styles.navbutton_counter_text}>
+          {state.cart.reduce((acc, d) => acc + d.quantity, 0)}
+        </Text>
+      </View>
+    ) : null;
+  }
   render() {
     return (
       <>
-        <View style={[styles.topbar, styles.elevation]}>
-          <TouchableHighlight
-            underlayColor={colors.secondary + '44'}
-            style={styles.navbutton_touchableHighlight}
-            onPress={() => {
-              this.props.showBack
-                ? this.props.navigation.goBack()
-                : this.props.navigation.openDrawer();
-            }}>
-            <View style={styles.navbutton}>
-              <FontAwesomeIcon
-                icon={this.props.showBack ? faChevronLeft : faBars}
-                color={colors.primary}
-                size={24}
-              />
-            </View>
-          </TouchableHighlight>
+        <View style={[styles.topbar]}>
+          {this.props.showBack ? (
+            <FabButton onPress={this.goBack.bind(this)} icon={faChevronLeft} />
+          ) : (
+            <FabButton onPress={this.openDrawer.bind(this)} icon={faBars} />
+          )}
           <Text style={styles.header_text}>{this.props.title}</Text>
           <View style={styles.flexGrow} />
           {this.props.hideCart ? null : (
-            <TouchableHighlight
-              underlayColor={colors.secondary + '44'}
-              onPress={() => {
-                this.props.navigation.navigate('Cart');
-              }}
-              style={styles.navbutton_touchableHighlight}>
-              <View style={styles.navbutton}>
-                <FontAwesomeIcon
-                  icon={faShoppingCart}
-                  color={colors.primary}
-                  size={24}
-                />
-                <StateContext.Consumer>
-                  {([state]) =>
-                    state.cart.length ? (
-                      <View style={styles.navbutton_counter}>
-                        <Text style={styles.navbutton_counter_text}>
-                          {state.cart.reduce((acc, d) => acc + d.quantity, 0)}
-                        </Text>
-                      </View>
-                    ) : null
-                  }
-                </StateContext.Consumer>
-              </View>
-            </TouchableHighlight>
+            <FabButton onPress={this.goToCart.bind(this)} icon={faShoppingCart}>
+              <StateContext.Consumer>
+                {this.cartCounterRender.bind(this)}
+              </StateContext.Consumer>
+            </FabButton>
           )}
-          <TouchableHighlight
-            underlayColor={colors.secondary + '44'}
-            style={styles.navbutton_touchableHighlight}
-            onPress={() => {
-              this.props.navigation.navigate('Search');
-            }}>
-            <View style={styles.navbutton}>
-              <FontAwesomeIcon
-                icon={faSearch}
-                color={colors.primary}
-                size={24}
-              />
-            </View>
-          </TouchableHighlight>
+          <FabButton onPress={this.openSearch.bind(this)} icon={faSearch} />
         </View>
       </>
     );
@@ -108,15 +85,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  navbutton_touchableHighlight: {
-    borderRadius: 32,
-  },
-  navbutton: {
-    height: 64,
-    width: 64,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
   topbar: {
     zIndex: 3,
     flexDirection: 'row',
@@ -125,5 +93,4 @@ const styles = StyleSheet.create({
     width: '100%',
     alignItems: 'center',
   },
-  elevation: {},
 });

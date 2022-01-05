@@ -1,11 +1,5 @@
 import React, {Component} from 'react';
-import {
-  View,
-  StyleSheet,
-  TextInput,
-  TouchableHighlight,
-  FlatList,
-} from 'react-native';
+import {View, StyleSheet, TextInput, FlatList} from 'react-native';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faSearch, faTimes} from '@fortawesome/free-solid-svg-icons';
 import {colors} from '../colors.js';
@@ -13,6 +7,7 @@ import {colors} from '../colors.js';
 import {products} from '../provider/Products';
 
 import ProductItem from '../components/ProductItem';
+import FabButton from '../components/FabButton';
 
 export default class Searchbar extends Component {
   state = {
@@ -55,18 +50,10 @@ export default class Searchbar extends Component {
             style={styles.textInput}
           />
           <View style={styles.flexGrow} />
-          <TouchableHighlight
-            activeOpacity={0.6}
-            underlayColor="#DDDDDD"
-            onPress={() => this.props.navigation.goBack()}>
-            <View style={styles.iconPadding}>
-              <FontAwesomeIcon
-                icon={faTimes}
-                color={colors.primary}
-                size={24}
-              />
-            </View>
-          </TouchableHighlight>
+          <FabButton
+            onPress={() => this.props.navigation.goBack()}
+            icon={faTimes}
+          />
         </View>
         <FlatList
           contentContainerStyle={styles.scrollViewContent}
